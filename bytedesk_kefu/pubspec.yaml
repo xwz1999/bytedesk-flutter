@@ -113,7 +113,7 @@ dependencies:
   csslib: ^0.17.1
   css_colors: ^1.1.1
   # Plugins for rendering the <video> tag.
-  video_player: ^2.4.0
+  video_player: ^2.0.0
   # chewie: ^1.2.2 # 与 flutter_html: ^3.0.0-alpha.3 不兼容
   # chewie:
   #   git:
