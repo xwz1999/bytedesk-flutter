@@ -28,7 +28,7 @@ dependencies:
   event_bus: ^2.0.0
   # https://flutter.dev/docs/cookbook/persistence/sqlite
   # https://pub.dev/packages/sqflite
-  sqflite: ^2.0.2+1
+  sqflite: ^2.0.2
   # https://pub.dev/packages/path
   path: ^1.8.0
   # https://pub.dev/packages/permission_handler
