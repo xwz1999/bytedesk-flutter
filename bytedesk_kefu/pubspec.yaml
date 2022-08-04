@@ -92,7 +92,7 @@ dependencies:
   # # https://pub.dev/packages/carousel_slider
   carousel_slider: ^4.1.1
   # # https://pub.dev/packages/flutter_chat_ui
-  flutter_chat_ui: ^1.5.8
+  flutter_chat_ui: ^1.5.3
   # 录音
   # flutter_sound: ^9.2.12
   # flutter_sound_platform_interface: ^9.2.12
