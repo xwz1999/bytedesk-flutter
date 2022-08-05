@@ -452,7 +452,7 @@ class _ChatInputState extends State<ChatInput> with TickerProviderStateMixin {
           child: Material(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(10),),
                 //InheritedChatTheme.of(context).theme.inputBorderRadius,
-            // color: Color.white, //Color(0xff1d1c21),//InheritedChatTheme.of(context).theme.inputBackgroundColor,
+            color: Colors.white, //Color(0xff1d1c21),//InheritedChatTheme.of(context).theme.inputBackgroundColor,
             child: Container(
               padding: EdgeInsets.fromLTRB(
                 _query.padding.left,
@@ -504,7 +504,7 @@ class _ChatInputState extends State<ChatInput> with TickerProviderStateMixin {
                         ),
                       ),
                       // emoji
-                      buildEmojiButton(),
+                      //buildEmojiButton(),
                       //extra
                       _textController.text.isEmpty
                           ? buildExtra()

@@ -12,6 +12,30 @@
       <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/build" />
       <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/bytedesk_kefu/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/bytedesk_kefu/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/bytedesk_kefu/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/url_launcher_windows/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/bytedesk_kefu/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/bytedesk_kefu/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/bytedesk_kefu/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bytedesk_demo/windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows/.dart_tool" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

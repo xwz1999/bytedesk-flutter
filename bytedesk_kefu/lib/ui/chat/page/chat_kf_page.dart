@@ -193,9 +193,20 @@ class _ChatKFPageState extends State<ChatKFPage>
     //
     return Scaffold(
         appBar: AppBar(
-          title: Text(_title ?? '请求中, 请稍后...'),
+          title: Text(_title ?? '请求中, 请稍后...',style: TextStyle(color: Color(0xFF333333),fontSize: 16),),
+          backgroundColor: Colors.white,
           centerTitle: true,
           elevation: 0,
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 17,
+                color: Color(0xFF333333),
+              ),
+              onPressed:
+                      () {
+                    Navigator.maybePop(context);
+                  }),
           actions: [
             // TODO: 评价
             // TODO: 常见问题

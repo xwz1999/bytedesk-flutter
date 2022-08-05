@@ -327,7 +327,7 @@ class MessageWidget extends StatelessWidget {
                           margin: EdgeInsets.only(left: 18, bottom: 2),
                           child: Text(
                             message!.nickname!,
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(fontSize: 10,color: Color(0xFF333333)),
                           ),
                         ),
                         // FIXME: 升级2.12兼容null-safty之后，无法显示长按气泡
@@ -742,7 +742,7 @@ class MessageWidget extends StatelessWidget {
           child: Text(
             message!.timestamp ?? '',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 10.0),
+            style: TextStyle(fontSize: 10.0,color: Color(0xFF333333)),
           ),
         )
       ],
@@ -759,7 +759,7 @@ class MessageWidget extends StatelessWidget {
           child: Text(
             message!.content ?? '',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 10.0),
+            style: TextStyle(fontSize: 10.0,color: Color(0xFF333333)),
           ),
         )
       ],
