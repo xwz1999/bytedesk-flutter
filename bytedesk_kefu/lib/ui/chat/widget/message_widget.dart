@@ -70,7 +70,7 @@ class MessageWidget extends StatelessWidget {
                     Expanded(flex: 1, child: Container()),
                     Text(
                       status,
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 10,color: Color(0xFF444444)),
                     ),
                     Container(
                       width: 5,

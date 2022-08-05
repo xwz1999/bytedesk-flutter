@@ -531,7 +531,7 @@ class _ChatKFPageState extends State<ChatKFPage>
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
+                            color: Colors.white
                           ),
                           // child: _textComposerWidget(),
                           child: _chatInput(),
