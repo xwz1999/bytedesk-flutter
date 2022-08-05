@@ -335,12 +335,14 @@ class _ChatInputState extends State<ChatInput> with TickerProviderStateMixin {
       //           ),
       //       hintText: '',
       //     ),
+      style:TextStyle(color: Color(0xFF333333)),
       focusNode: _inputFocusNode,
       // maxLength: 400,
       maxLines: 6,
       minLines: 1,
       // 长按是否展示【剪切/复制/粘贴菜单LengthLimitingTextInputFormatter】
       enableInteractiveSelection: true,
+
       keyboardType: TextInputType.multiline,
       textCapitalization: TextCapitalization.sentences,
       textInputAction: TextInputAction.newline,

@@ -480,7 +480,7 @@ class _ChatKFPageState extends State<ChatKFPage>
                       CircularProgressIndicator(
                         strokeWidth: 2,
                       ),
-                      Text('会话请求中, 请稍后...')
+                      Text('会话请求中, 请稍后...',style: TextStyle(color: Color(0xFF333333)),)
                     ]))
                 : Container(
                     alignment: Alignment.bottomCenter,
