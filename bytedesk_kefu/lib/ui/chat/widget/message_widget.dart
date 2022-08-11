@@ -240,7 +240,7 @@ class MessageWidget extends StatelessWidget {
                     margin: EdgeInsets.only(left: 8),
                     child: Text(
                       title,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -676,7 +676,7 @@ class MessageWidget extends StatelessWidget {
                     margin: EdgeInsets.only(left: 8),
                     child: Text(
                       title,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
