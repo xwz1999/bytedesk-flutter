@@ -754,13 +754,15 @@ class MessageWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(bottom: 5, top: 5),
-          child: Text(
-            message!.content ?? '',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 10.0,color: Color(0xFF333333)),
-            maxLines: 15,
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.only(bottom: 5, top: 5),
+            child: Text(
+              message!.content ?? '',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 10.0,color: Color(0xFF333333)),
+              maxLines: 15,
+            ),
           ),
         )
       ],
