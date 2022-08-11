@@ -760,6 +760,7 @@ class MessageWidget extends StatelessWidget {
             message!.content ?? '',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 10.0,color: Color(0xFF333333)),
+            maxLines: 15,
           ),
         )
       ],
