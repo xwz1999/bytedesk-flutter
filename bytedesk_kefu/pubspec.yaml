@@ -71,7 +71,7 @@ dependencies:
   # 视频压缩 https://pub.dev/packages/flutter_video_compress/install
   # flutter_video_compress: ^0.3.7+8
   # 振动 https://pub.dev/packages/vibration
-  # vibration: ^1.7.3
+  # vibration: ^1.7.5
   # 播放语音
   # https://pub.dev/packages/audioplayers
   # audioplayers: ^0.16.1

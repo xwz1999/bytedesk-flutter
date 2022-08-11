@@ -44,7 +44,7 @@ dependencies:
   # 振动 https://pub.dev/packages/vibration
   # 针对报错fatal error: 'vibration/vibration-Swift.h' file not found #import <vibration/vibration-Swift.h>, ld: library not found for -lvibration
   # 请在ios/Podfile中添加：use_frameworks! 
-  vibration: ^1.7.3
+  vibration: ^1.7.5
   # 在线客服 https://pub.dev/packages/bytedesk_kefu
   #bytedesk_kefu: ^1.4.1
   bytedesk_kefu:

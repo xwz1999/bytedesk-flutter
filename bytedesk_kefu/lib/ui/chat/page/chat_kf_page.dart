@@ -114,8 +114,32 @@ class _ChatKFPageState extends State<ChatKFPage>
   // final _flutterVideoCompress = FlutterVideoCompress();
   bool _isRequestingThread = true;
   //
+  String goodName = '';
+  String goodPrice = '';
+  String goodUrl = '';
+  bool showGood = false;
   @override
   void initState() {
+    if (widget.custom != null &&
+        widget.custom!.trim().length > 0){
+      showGood = true;
+      Map<String, dynamic> json = jsonDecode(widget.custom??"");
+      json.forEach((key, value) {
+        //typeOne等所对应的数组数据
+        if(key=='title'){
+          goodName = value;
+        }
+        if(key=='price'){
+          goodPrice = value;
+        }
+        if(key=='imageUrl'){
+          goodUrl = value;
+        }
+      });
+    }
+
+
+
     // BytedeskUtils.printLog('chat_kf_page init');
     SpUtil.putBool(BytedeskConstants.isCurrentChatKfPage, true);
     // 从历史会话或者顶部通知栏进入
@@ -191,7 +215,7 @@ class _ChatKFPageState extends State<ChatKFPage>
   Widget build(BuildContext context) {
     super.build(context);
     //
-    return Scaffold(
+    return Scaffold (
         appBar: AppBar(
           title: Text(_title ?? '请求中, 请稍后...',style: TextStyle(color: Color(0xFF333333),fontSize: 16),),
           backgroundColor: Colors.white,
@@ -260,11 +284,11 @@ class _ChatKFPageState extends State<ChatKFPage>
                       BytedeskUtils.printLog('创建新会话');
                       // TODO: 参考拼多多，在发送按钮上方显示pop商品信息，用户确认之后才会发送商品信息
                       // 发送商品信息
-                      if (widget.custom != null &&
-                          widget.custom!.trim().length > 0) {
-                        _bdMqtt.sendCommodityMessage(
-                            widget.custom!, _currentThread!);
-                      }
+                      // if (widget.custom != null &&
+                      //     widget.custom!.trim().length > 0) {
+                      //   _bdMqtt.sendCommodityMessage(
+                      //       widget.custom!, _currentThread!);
+                      // }
                       // 发送附言消息
                       if (widget.postscript != null &&
                           widget.postscript!.trim().length > 0) {
@@ -278,11 +302,11 @@ class _ChatKFPageState extends State<ChatKFPage>
                       // 加载本地历史消息
                       _appendMessage(state.threadResult.msg!);
                       // 发送商品信息
-                      if (widget.custom != null &&
-                          widget.custom!.trim().length > 0) {
-                        _bdMqtt.sendCommodityMessage(
-                            widget.custom!, _currentThread!);
-                      }
+                      // if (widget.custom != null &&
+                      //     widget.custom!.trim().length > 0) {
+                      //   _bdMqtt.sendCommodityMessage(
+                      //       widget.custom!, _currentThread!);
+                      // }
                       // 发送附言消息
                       if (widget.postscript != null &&
                           widget.postscript!.trim().length > 0) {
@@ -482,63 +506,133 @@ class _ChatKFPageState extends State<ChatKFPage>
                       ),
                       Text('会话请求中, 请稍后...',style: TextStyle(color: Color(0xFF333333)),)
                     ]))
-                : Container(
-                    alignment: Alignment.bottomCenter,
-                    color: Color(0xFFDEEEEEE),
-                    child: Column(
-                      children: <Widget>[
-                        // 参考pull_to_refresh库中 QQChatList例子
-                        Expanded(
-                          //
-                          child: SmartRefresher(
-                            enablePullDown: false,
-                            onLoading: () async {
-                              // BytedeskUtils.printLog('TODO: 下拉刷新'); // 注意：方向跟默认是反着的
-                              // await Future.delayed(Duration(milliseconds: 1000));
-                              _getMessages(_page, _size);
-                              setState(() {});
-                              _refreshController.loadComplete();
-                            },
-                            footer: ClassicFooter(
-                              loadStyle: LoadStyle.ShowWhenLoading,
-                            ),
-                            enablePullUp: true,
-                            //
-                            child: Scrollable(
-                              controller: _scrollController,
-                              axisDirection: AxisDirection.up,
-                              viewportBuilder: (context, offset) {
-                                return ExpandedViewport(
-                                  offset: offset,
+                : Stack(
+                  alignment: Alignment.center,
+                  children: [
+
+
+                    Container(
+                        alignment: Alignment.bottomCenter,
+                        color: Color(0xFFDEEEEEE),
+                        child: Column(
+                          children: <Widget>[
+                            // 参考pull_to_refresh库中 QQChatList例子
+                            Expanded(
+                              //
+                              child: SmartRefresher(
+                                enablePullDown: false,
+                                onLoading: () async {
+                                  // BytedeskUtils.printLog('TODO: 下拉刷新'); // 注意：方向跟默认是反着的
+                                  // await Future.delayed(Duration(milliseconds: 1000));
+                                  _getMessages(_page, _size);
+                                  setState(() {});
+                                  _refreshController.loadComplete();
+                                },
+                                footer: ClassicFooter(
+                                  loadStyle: LoadStyle.ShowWhenLoading,
+                                ),
+                                enablePullUp: true,
+                                //
+                                child: Scrollable(
+                                  controller: _scrollController,
                                   axisDirection: AxisDirection.up,
-                                  slivers: <Widget>[
-                                    SliverExpanded(),
-                                    SliverList(
-                                      delegate: SliverChildBuilderDelegate(
-                                          (c, i) => _messages[i],
-                                          childCount: _messages.length),
-                                    )
+                                  viewportBuilder: (context, offset) {
+                                    return ExpandedViewport(
+                                      offset: offset,
+                                      axisDirection: AxisDirection.up,
+                                      slivers: <Widget>[
+                                        SliverExpanded(),
+                                        SliverList(
+                                          delegate: SliverChildBuilderDelegate(
+                                              (c, i) => _messages[i],
+                                              childCount: _messages.length),
+                                        )
+                                      ],
+                                    );
+                                  },
+                                ),
+                                //
+                                controller: _refreshController,
+                              ),
+                            ),
+                            Divider(
+                              height: 1.0,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white
+                              ),
+                              // child: _textComposerWidget(),
+                              child: _chatInput(),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    showGood? Positioned(
+                      top: 0,
+                      child:Container(
+                        width: 300,
+                        margin: EdgeInsets.all(10),
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFe5f9ff).withOpacity(0.8),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(width: 10,),
+                            Image.network(goodUrl,width: 50,height: 50,),
+                            SizedBox(width: 10,),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(goodName,style: TextStyle(color: Color(0xFF333333),fontSize: 15),),
+                                SizedBox(height: 8,),
+                                Row(
+                                  children: [
+                                    Text('¥ '+goodPrice,style: TextStyle(color:  Colors.red,fontSize: 16),),
+                                    SizedBox(width: 30,),
+                                    GestureDetector(
+                                      onTap: (){
+                                        showGood = false;
+                                        setState(() {
+                                        });
+                                        _goodsSubmitted();
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFefefef),
+                                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                                          border: Border.all(color:Color(0xFF999999) )
+                                        ),
+                                        padding: EdgeInsets.symmetric(horizontal: 5),
+                                        child: Text('发送链接',style: TextStyle(color: Color(0xFF333333)),),
+                                      ),
+                                    ),
                                   ],
-                                );
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            IconButton(
+                              padding: const EdgeInsets.only(bottom: 30),
+                              icon: Icon(
+                                Icons.close,
+                              ),
+                              onPressed: () {
+                                showGood = false;
+                                setState(() {
+                                });
                               },
                             ),
-                            //
-                            controller: _refreshController,
-                          ),
+                          ],
                         ),
-                        Divider(
-                          height: 1.0,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white
-                          ),
-                          // child: _textComposerWidget(),
-                          child: _chatInput(),
-                        ),
-                      ],
-                    ),
-                  )));
+                      ),):SizedBox(),
+                  ],
+                )));
   }
 
   Widget _chatInput() {
@@ -665,7 +759,8 @@ class _ChatKFPageState extends State<ChatKFPage>
                 icon: Icon(Icons.send),
                 onPressed: () => _handleSubmitted(_textController.text),
               ),
-            )
+            ),
+
           ],
         ),
       ),
@@ -675,6 +770,33 @@ class _ChatKFPageState extends State<ChatKFPage>
   //
   @override
   bool get wantKeepAlive => true;
+
+  // 发送商品消息
+  void _goodsSubmitted() {
+
+    if (widget.custom != null &&
+        widget.custom!.trim().length > 0) {
+
+      if (_bdMqtt.isConnected()) {
+        if (_currentThread == null) {
+          Fluttertoast.showToast(msg: '请求客服中, 请稍后...');
+          return;
+        }
+        // 长连接正常情况下，调用长连接接口
+        _bdMqtt.sendCommodityMessage(
+            widget.custom!, _currentThread!);
+      } else {
+
+      }
+
+    }else{
+      return;
+    }
+
+
+  }
+
+
 
   // 发送消息
   void _handleSubmitted(String? text) {
