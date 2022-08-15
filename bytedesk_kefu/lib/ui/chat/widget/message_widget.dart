@@ -449,12 +449,12 @@ class MessageWidget extends StatelessWidget {
     } else if (message.type == BytedeskConstants.MESSAGE_TYPE_ROBOT) {
       return Column(
         children: <Widget>[
-          // Text(
-          //   message.content ?? '',
-          //   textAlign: TextAlign.left,
-          //   softWrap: true,
-          //   style: TextStyle(color: Colors.black, fontSize: 16.0),
-          // ),
+          Text(
+            message.content ?? '',
+            textAlign: TextAlign.left,
+            softWrap: true,
+            style: TextStyle(color: Colors.black, fontSize: 16.0),
+          ),
           Visibility(
             visible: message.content != null && message.content!.length > 0,
             child: Html(
@@ -537,24 +537,24 @@ class MessageWidget extends StatelessWidget {
                   },
                 ),
               )),
-          Container(
-            margin: EdgeInsets.only(left: 10, top: 10),
-            child: Row(
-              children: [
-                Text('没有找到答案？'),
-                GestureDetector(
-                  child: Text(
-                    '人工客服',
-                    style: TextStyle(color: Theme.of(context).primaryColor),
-                  ),
-                  onTap: () {
-                    BytedeskUtils.printLog('请求人工客服');
-                    bytedeskEventBus.fire(RequestAgentThreadEventBus());
-                  },
-                )
-              ],
-            ),
-          )
+          // Container(
+          //   margin: EdgeInsets.only(left: 10, top: 10),
+          //   child: Row(
+          //     children: [
+          //       Text('没有找到答案？'),
+          //       GestureDetector(
+          //         child: Text(
+          //           '人工客服',
+          //           style: TextStyle(color: Theme.of(context).primaryColor),
+          //         ),
+          //         onTap: () {
+          //           BytedeskUtils.printLog('请求人工客服');
+          //           bytedeskEventBus.fire(RequestAgentThreadEventBus());
+          //         },
+          //       )
+          //     ],
+          //   ),
+          // )
         ],
       );
     } else if (message.type == BytedeskConstants.MESSAGE_TYPE_ROBOT_V2) {
