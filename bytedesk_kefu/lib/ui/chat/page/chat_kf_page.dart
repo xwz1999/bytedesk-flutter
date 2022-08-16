@@ -572,11 +572,11 @@ class _ChatKFPageState extends State<ChatKFPage>
                     showGood? Positioned(
                       top: 0,
                       child:Container(
-                        width: 300,
-                        margin: EdgeInsets.all(10),
+                        width: MediaQuery.of(context).size.width,
+
                         padding: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: Color(0xFFe5f9ff).withOpacity(0.8),
+                          color: Color(0xFFe5f9ff),
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                         ),
                         child: Row(
