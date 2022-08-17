@@ -14,7 +14,7 @@ class ChatKFProvider extends StatelessWidget {
   final String? postscript;
   final bool? isV2Robot;
   final ValueSetter<String>? customCallback;
-  final Widget? widget;
+  final Function? btnBack;
   //
   const ChatKFProvider(
       {Key? key,
@@ -25,7 +25,7 @@ class ChatKFProvider extends StatelessWidget {
       this.custom,
       this.postscript,
       this.isV2Robot,
-      this.customCallback, this.widget})
+      this.customCallback, this.btnBack})
       : super(key: key);
   //
   @override
@@ -51,7 +51,8 @@ class ChatKFProvider extends StatelessWidget {
           isV2Robot: isV2Robot,
           isThread: false,
           customCallback: customCallback,
-          widget: widget,),
+          btnBack: btnBack,
+         ),
     );
   }
 }

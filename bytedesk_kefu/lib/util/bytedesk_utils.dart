@@ -28,8 +28,10 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class BytedeskUtils {
-  //
-  static String goodsInfo = '';
+
+
+  static ValueNotifier<String> goodsInfo = ValueNotifier<String>('');
+
   static bool get isDesktop => !isWeb && (isWindows || isLinux || isMacOS);
   static bool get isMobile => isAndroid || isIOS;
   static bool get isWeb => kIsWeb;

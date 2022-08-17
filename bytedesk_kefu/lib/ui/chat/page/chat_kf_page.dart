@@ -51,7 +51,7 @@ class ChatKFPage extends StatefulWidget {
   final bool? isThread;
   final Thread? thread;
   final ValueSetter<String>? customCallback;
-  final Widget? widget;
+  final Function? btnBack;
   //
   ChatKFPage(
       {Key? key,
@@ -64,7 +64,7 @@ class ChatKFPage extends StatefulWidget {
       this.isV2Robot,
       this.isThread,
       this.thread,
-      this.customCallback, this.widget})
+      this.customCallback, this.btnBack,})
       : super(key: key);
   //
   @override
@@ -120,26 +120,42 @@ class _ChatKFPageState extends State<ChatKFPage>
   String goodUrl = '';
   bool showGood = false;
   String customGoods = '';
+  // String lastGoods = '';
+
+
   @override
   void initState() {
-    customGoods = widget.custom??'';
-    if (
-        customGoods.trim().length > 0){
-      showGood = true;
-      Map<String, dynamic> json = jsonDecode(customGoods);
-      json.forEach((key, value) {
-        //typeOne等所对应的数组数据
-        if(key=='title'){
-          goodName = value;
-        }
-        if(key=='price'){
-          goodPrice = value;
-        }
-        if(key=='imageUrl'){
-          goodUrl = value;
-        }
-      });
+
+    BytedeskUtils.goodsInfo.addListener(() {
+      print('发生改变！！！！！！！！！！');
+      customGoods = BytedeskUtils.goodsInfo.value;
+      _goodsSubmitted();
+    });
+
+
+    if(widget.btnBack==null){
+      customGoods = widget.custom??'';
+
+      if (customGoods.trim().length > 0){
+        showGood = true;
+        Map<String, dynamic> json = jsonDecode(customGoods);
+        json.forEach((key, value) {
+          //typeOne等所对应的数组数据
+          if(key=='title'){
+            goodName = value;
+          }
+          if(key=='price'){
+            goodPrice = value;
+          }
+          if(key=='imageUrl'){
+            goodUrl = value;
+          }
+        });
+      }
+    }else{
     }
+
+
 
 
 
@@ -604,7 +620,7 @@ class _ChatKFPageState extends State<ChatKFPage>
                                       SizedBox(width: 30,),
                                       GestureDetector(
                                         onTap: (){
-                                          //showGood = false;
+                                          showGood = false;
                                           setState(() {
                                           });
                                           _goodsSubmitted();
@@ -695,10 +711,9 @@ class _ChatKFPageState extends State<ChatKFPage>
 
   void _handleShowOrders() async {
     print('_handleShowOrders');
-    if(widget.customCallback!=null){
-      widget.customCallback!('点击订单');
-      customGoods = BytedeskUtils.goodsInfo;
-      _goodsSubmitted();
+    if(widget.btnBack!=null){
+       widget.btnBack!();
+
     }
   }
 
@@ -794,8 +809,7 @@ class _ChatKFPageState extends State<ChatKFPage>
   // 发送商品消息
   void _goodsSubmitted() {
     print(customGoods);
-    if (
-    customGoods.trim().length > 0) {
+    if (customGoods.trim().length > 0) {
 
       if (_bdMqtt.isConnected()) {
         if (_currentThread == null) {
