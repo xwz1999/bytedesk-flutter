@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:bytedesk_kefu/util/bytedesk_constants.dart';
+import 'package:bytedesk_kefu/util/bytedesk_utils.dart';
 import 'package:flutter/material.dart';
 
 // 多种客服对话类型列表页面
@@ -126,6 +127,7 @@ class _ChatTypePageState extends State<ChatTypePage> {
                 "other2": "", // 可另外添加自定义字段，客服端不可见，可用于回调原样返回
                 "other3": "", // 可另外添加自定义字段，客服端不可见，可用于回调原样返回
               });
+
               BytedeskKefu.startWorkGroupChatShopCallback(
                   context, _workGroupWid, "技能组客服-电商-回调", custom, (value) {
                 print('value为custom参数原样返回 $value');
@@ -133,10 +135,36 @@ class _ChatTypePageState extends State<ChatTypePage> {
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return Container(
-                        width: 200,
-                        height: 200,
-                        color: Colors.red,
+                      return GestureDetector(
+                        onTap: (){
+                          custom = json.encode({
+                            "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
+                            "title": "11111", // 可自定义, 类型为字符串
+                            "content": "11111", // 可自定义, 类型为字符串
+                            "price": "11111", // 可自定义, 类型为字符串
+                            "url":
+                            "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串
+                            "imageUrl":
+                            "https://bytedesk.oss-cn-shenzhen.aliyuncs.com/images/123.webp", //必须为图片网址, 类型为字符串
+                            "id": 123, // 可自定义
+                            "categoryCode": "100010003", // 可自定义, 类型为字符串
+                            "client": "flutter", // 可自定义, 类型为字符串
+                            // 可自定义添加key:value, 客服端不可见，可用于回调原样返回
+                            "other1": "", // 可另外添加自定义字段，客服端不可见，可用于回调原样返回
+                            "other2": "", // 可另外添加自定义字段，客服端不可见，可用于回调原样返回
+                            "other3": "", // 可另外添加自定义字段，客服端不可见，可用于回调原样返回
+                          });
+                          print('11111');
+                          BytedeskKefu.updateGoods(custom);
+                          setState(() {
+
+                          });
+                        },
+                        child: Container(
+                          width: 200,
+                          height: 200,
+                          color: Colors.red,
+                        ),
                       );
                     });
               });

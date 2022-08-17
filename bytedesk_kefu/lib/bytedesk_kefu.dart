@@ -1,5 +1,4 @@
 import 'dart:async';
-// import 'dart:io';
 
 import 'package:bytedesk_kefu/http/bytedesk_device_api.dart';
 import 'package:bytedesk_kefu/http/bytedesk_thread_api.dart';
@@ -161,6 +160,7 @@ class BytedeskKefu {
   // 建立长连接
   static bool connect() {
     return BytedeskUtils.mqttConnect();
+
   }
 
   // 重连
@@ -205,6 +205,13 @@ class BytedeskKefu {
     startChatShop(context, wid, BytedeskConstants.CHAT_TYPE_WORKGROUP, title,
         commodity, null);
   }
+
+
+  ///用于更新订单数据
+  static void updateGoods(String info) {
+    BytedeskUtils.goodsInfo = info;
+  }
+
 
   static void startWorkGroupChatShopCallback(BuildContext context, String wid,
       String title, String commodity, ValueSetter<String> customCallback,{Widget? widget}) {

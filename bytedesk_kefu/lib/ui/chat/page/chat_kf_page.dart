@@ -119,12 +119,14 @@ class _ChatKFPageState extends State<ChatKFPage>
   String goodPrice = '';
   String goodUrl = '';
   bool showGood = false;
+  String customGoods = '';
   @override
   void initState() {
-    if (widget.custom != null &&
-        widget.custom!.trim().length > 0){
+    customGoods = widget.custom??'';
+    if (
+        customGoods.trim().length > 0){
       showGood = true;
-      Map<String, dynamic> json = jsonDecode(widget.custom??"");
+      Map<String, dynamic> json = jsonDecode(customGoods);
       json.forEach((key, value) {
         //typeOne等所对应的数组数据
         if(key=='title'){
@@ -216,424 +218,429 @@ class _ChatKFPageState extends State<ChatKFPage>
   Widget build(BuildContext context) {
     super.build(context);
     //
-    return Scaffold (
-        appBar: AppBar(
-          title: Text(_title ?? '请求中, 请稍后...',style: TextStyle(color: Color(0xFF333333),fontSize: 16),),
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          elevation: 0,
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                size: 17,
-                color: Color(0xFF333333),
-              ),
-              onPressed:
-                      () {
-                    Navigator.maybePop(context);
-                  }),
-          actions: [
-            // TODO: 评价
-            // TODO: 常见问题
-            Visibility(
-              visible: _isRobot,
-              child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                      padding: new EdgeInsets.only(right: 10),
-                      width: 60,
-                      child: InkWell(
-                        onTap: () {
-                          BlocProvider.of<ThreadBloc>(context)
-                            ..add(RequestAgentEvent(
-                                wid: widget.wid,
-                                aid: widget.aid,
-                                type: widget.type));
-                        },
-                        child: Text(
-                          '转人工',
-                          // style: TextStyle(color: Colors.black),
-                        ),
-                      ))),
-            ),
-          ],
-        ),
-        body: MultiBlocListener(
-            listeners: [
-              BlocListener<ThreadBloc, ThreadState>(
-                listener: (context, state) {
-                  // 隐藏toast
-                  // Fluttertoast.cancel();
-                  if (state is RequestThreading) {
-                    setState(() {
-                      _isRequestingThread = true;
-                    });
-                  } else if (state is RequestThreadSuccess) {
-                    setState(() {
-                      _isRobot = false; // 需要，勿删
-                      _currentThread = state.threadResult.msg!.thread;
-                      _isRequestingThread = false;
-                    });
-                    // TODO: 加载本地历史消息
-                    _getMessages(_page, _size);
-                    // 加载未读消息
-                    BlocProvider.of<MessageBloc>(context)
-                      ..add(LoadUnreadVisitorMessagesEvent(page: 0, size: 10));
-                    // 结果解析
-                    if (state.threadResult.statusCode == 200 ||
-                        state.threadResult.statusCode == 201) {
-                      BytedeskUtils.printLog('创建新会话');
-                      // TODO: 参考拼多多，在发送按钮上方显示pop商品信息，用户确认之后才会发送商品信息
-                      // 发送商品信息
-                      // if (widget.custom != null &&
-                      //     widget.custom!.trim().length > 0) {
-                      //   _bdMqtt.sendCommodityMessage(
-                      //       widget.custom!, _currentThread!);
-                      // }
-                      // 发送附言消息
-                      if (widget.postscript != null &&
-                          widget.postscript!.trim().length > 0) {
-                        _bdMqtt.sendTextMessage(
-                            widget.postscript!, _currentThread!);
-                      }
-                    } else if (state.threadResult.statusCode == 202) {
-                      BytedeskUtils.printLog('提示排队中');
-                      // 插入本地
-                      _messageProvider.insert(state.threadResult.msg!);
-                      // 加载本地历史消息
-                      _appendMessage(state.threadResult.msg!);
-                      // 发送商品信息
-                      // if (widget.custom != null &&
-                      //     widget.custom!.trim().length > 0) {
-                      //   _bdMqtt.sendCommodityMessage(
-                      //       widget.custom!, _currentThread!);
-                      // }
-                      // 发送附言消息
-                      if (widget.postscript != null &&
-                          widget.postscript!.trim().length > 0) {
-                        _bdMqtt.sendTextMessage(
-                            widget.postscript!, _currentThread!);
-                      }
-                    } else if (state.threadResult.statusCode == 203) {
-                      BytedeskUtils.printLog('当前非工作时间，请自助查询或留言');
-                      setState(() {
-                        _currentThread = state.threadResult.msg!.thread;
-                      });
-                      // 插入本地
-                      _messageProvider.insert(state.threadResult.msg!);
-                      // TODO: 加载本地历史消息
-                      _appendMessage(state.threadResult.msg!);
-                      // 跳转留言页面，TODO: 关闭当前页面？
-                      Navigator.of(context)
-                          .push(new MaterialPageRoute(builder: (context) {
-                        return new LeaveMsgProvider(
-                            wid: this.widget.wid,
-                            aid: this.widget.aid,
-                            type: this.widget.type,
-                            tip: state.threadResult.msg!.content);
-                      }));
-                    } else if (state.threadResult.statusCode == 204) {
-                      BytedeskUtils.printLog('当前无客服在线，请自助查询或留言');
-                      setState(() {
-                        _currentThread = state.threadResult.msg!.thread;
-                      });
-                      // 插入本地
-                      _messageProvider.insert(state.threadResult.msg!);
-                      // TODO: 加载本地历史消息
-                      // _getMessages(_page, _size);
-                      _appendMessage(state.threadResult.msg!);
-                      // 跳转留言页面, TODO: 关闭当前页面？
-                      Navigator.of(context)
-                          .push(new MaterialPageRoute(builder: (context) {
-                        return new LeaveMsgProvider(
-                            wid: this.widget.wid,
-                            aid: this.widget.aid,
-                            type: this.widget.type,
-                            tip: state.threadResult.msg!.content);
-                      }));
-                    } else if (state.threadResult.statusCode == 205) {
-                      BytedeskUtils.printLog('咨询前问卷');
-                      setState(() {
-                        _currentThread = state.threadResult.msg!.thread;
-                      });
-                      // 插入本地
-                      _messageProvider.insert(state.threadResult.msg!);
-                      // TODO: 加载本地历史消息
-                      // _getMessages(_page, _size);
-                      _appendMessage(state.threadResult.msg!);
-                      //
-                    } else if (state.threadResult.statusCode == 206) {
-                      // BytedeskUtils.printLog('返回机器人初始欢迎语 + 欢迎问题列表');
-                      // TODO: 显示问题列表
-                      setState(() {
-                        _isRobot = true;
-                        _robotUser = state.threadResult.msg!.user;
-                        _currentThread = state.threadResult.msg!.thread;
-                      });
-                      // 插入本地
-                      _messageProvider.insert(state.threadResult.msg!);
-                      // TODO: 加载本地历史消息
-                      // _getMessages(_page, _size);
-                      _appendMessage(state.threadResult.msg!);
-                      //
-                    } else if (state.threadResult.statusCode == -1) {
-                      Fluttertoast.showToast(msg: "请求会话失败");
-                    } else if (state.threadResult.statusCode == -2) {
-                      Fluttertoast.showToast(msg: "siteId或者工作组id错误");
-                    } else if (state.threadResult.statusCode == -3) {
-                      Fluttertoast.showToast(msg: "您已经被禁言");
-                    } else {
-                      Fluttertoast.showToast(msg: "请求会话失败");
-                    }
-                  } else if (state is RequestThreadError) {
-                    Fluttertoast.showToast(msg: "请求会话失败");
-                    setState(() {
-                      _isRequestingThread = false;
-                    });
-                  } else if (state is RequestAgentThreading) {
-                    setState(() {
-                      _isRequestingThread = true;
-                    });
-                  } else if (state is RequestAgentSuccess) {
-                    // 请求人工客服，不管此工作组是否设置为默认机器人，只要有人工客服在线，则可以直接对接人工
-                    setState(() {
-                      _isRobot = false; // 需要，勿删
-                      _currentThread = state.threadResult.msg!.thread;
-                      _isRequestingThread = false;
-                    });
-                    // 插入本地
-                    _messageProvider.insert(state.threadResult.msg!);
-                    // _appendMessage(state.threadResult.msg!);
-                  } else if (state is RequestAgentThreadError) {
-                    Fluttertoast.showToast(msg: "请求会话失败");
-                    setState(() {
-                      _isRequestingThread = false;
-                    });
-                  }
-                },
-              ),
-              BlocListener<MessageBloc, MessageState>(
-                listener: (context, state) {
-                  // BytedeskUtils.printLog('message state change');
-                  if (state is ReceiveMessageState) {
-                    // BytedeskUtils.printLog('receive message:' + state.message!.content!);
-                  } else if (state is MessageUpLoading) {
-                    Fluttertoast.showToast(msg: '上传中...');
-                  } else if (state is UploadImageSuccess) {
-                    if (_bdMqtt.isConnected()) {
-                      _bdMqtt.sendImageMessage(
-                          state.uploadJsonResult.url!, _currentThread!);
-                    } else {
-                      sendImageMessageRest(state.uploadJsonResult.url!);
-                    }
-                  } else if (state is UploadVideoSuccess) {
-                    _bdMqtt.sendVideoMessage(
-                        state.uploadJsonResult.url!, _currentThread!);
-                  } else if (state is QueryAnswerSuccess) {
-                    // 已经修改为直接插入本地
-                    // Message queryMessage = state.query!;
-                    // queryMessage.isSend = 1;
-                    // _messageProvider.insert(queryMessage);
-                    // _appendMessage(queryMessage);
-                    // //
-                    // _messageProvider.insert(state.answer!);
-                    // _appendMessage(state.answer!);
-                  } else if (state is QueryCategorySuccess) {
-                    _messageProvider.insert(state.answer!);
-                    _appendMessage(state.answer!);
-                  } else if (state is MessageAnswerSuccess) {
-                    // Message queryMessage = state.query!;
-                    // queryMessage.isSend = 1;
-                    // _messageProvider.insert(queryMessage);
-                    // _appendMessage(queryMessage);
-                    //
-                    if (state.query!.content!.contains('人工')) {
-                      BlocProvider.of<ThreadBloc>(context)
-                        ..add(RequestAgentEvent(
-                            wid: widget.wid,
-                            aid: widget.aid,
-                            type: widget.type));
-                    } else {
-                      _messageProvider.insert(state.answer!);
-                      _appendMessage(state.answer!);
-                    }
-                  } else if (state is RateAnswerSuccess) {
-                    // TODO:
-                  } else if (state is LoadHistoryMessageSuccess) {
-                    // BytedeskUtils.printLog('LoadHistoryMessageSuccess');
-                    // 插入历史聊天记录
-                    for (var i = 0; i < state.messageList!.length; i++) {
-                      Message message = state.messageList![i];
-                      _appendMessage(message);
-                    }
-                  } else if (state is LoadUnreadVisitorMessageSuccess) {
-                    // 插入历史聊天记录
-                    if (state.messageList!.length > 0) {
-                      // for (var i = 0; i < state.messageList!.length; i++) {
-                      for (var i = state.messageList!.length - 1; i >= 0; i--) {
-                        Message message = state.messageList![i];
-                        // 本地持久化
-                        _messageProvider.insert(message);
-                        // 界面显示
-                        _appendMessage(message);
-                        // 发送已读回执
-                        _bdMqtt.sendReceiptReadMessage(
-                            message.mid!, _currentThread!);
-                      }
-                    }
-                  } else if (state is SendMessageRestSuccess) {
-                    // http rest 发送消息成功
-                    String jsonMessage = state.jsonResult.data!;
-                    String mid = json.decode(jsonMessage);
-                    _messageProvider.update(
-                        mid, BytedeskConstants.MESSAGE_STATUS_STORED);
-                  } else if (state is SendMessageRestError) {
-                    // http rest 发送消息失败
-                    String jsonMessage = state.json;
-                    String mid = json.decode(jsonMessage);
-                    _messageProvider.update(
-                        mid, BytedeskConstants.MESSAGE_STATUS_STORED);
-                  }
-                },
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold (
+          appBar: AppBar(
+            title: Text(_title ?? '请求中, 请稍后...',style: TextStyle(color: Color(0xFF333333),fontSize: 16),),
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            elevation: 0,
+            leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 17,
+                  color: Color(0xFF333333),
+                ),
+                onPressed:
+                        () {
+                      Navigator.maybePop(context);
+                    }),
+            actions: [
+              // TODO: 评价
+              // TODO: 常见问题
+              Visibility(
+                visible: _isRobot,
+                child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                        padding: new EdgeInsets.only(right: 10),
+                        width: 60,
+                        child: InkWell(
+                          onTap: () {
+                            BlocProvider.of<ThreadBloc>(context)
+                              ..add(RequestAgentEvent(
+                                  wid: widget.wid,
+                                  aid: widget.aid,
+                                  type: widget.type));
+                          },
+                          child: Text(
+                            '转人工',
+                            // style: TextStyle(color: Colors.black),
+                          ),
+                        ))),
               ),
             ],
-            child: _isRequestingThread
-                ? Container(
-                    margin: EdgeInsets.only(top: 50),
+          ),
+          body: MultiBlocListener(
+              listeners: [
+                BlocListener<ThreadBloc, ThreadState>(
+                  listener: (context, state) {
+                    // 隐藏toast
+                    // Fluttertoast.cancel();
+                    if (state is RequestThreading) {
+                      setState(() {
+                        _isRequestingThread = true;
+                      });
+                    } else if (state is RequestThreadSuccess) {
+                      setState(() {
+                        _isRobot = false; // 需要，勿删
+                        _currentThread = state.threadResult.msg!.thread;
+                        _isRequestingThread = false;
+                      });
+                      // TODO: 加载本地历史消息
+                      _getMessages(_page, _size);
+                      // 加载未读消息
+                      BlocProvider.of<MessageBloc>(context)
+                        ..add(LoadUnreadVisitorMessagesEvent(page: 0, size: 10));
+                      // 结果解析
+                      if (state.threadResult.statusCode == 200 ||
+                          state.threadResult.statusCode == 201) {
+                        BytedeskUtils.printLog('创建新会话');
+                        // TODO: 参考拼多多，在发送按钮上方显示pop商品信息，用户确认之后才会发送商品信息
+                        // 发送商品信息
+                        // if (widget.custom != null &&
+                        //     widget.custom!.trim().length > 0) {
+                        //   _bdMqtt.sendCommodityMessage(
+                        //       widget.custom!, _currentThread!);
+                        // }
+                        // 发送附言消息
+                        if (widget.postscript != null &&
+                            widget.postscript!.trim().length > 0) {
+                          _bdMqtt.sendTextMessage(
+                              widget.postscript!, _currentThread!);
+                        }
+                      } else if (state.threadResult.statusCode == 202) {
+                        BytedeskUtils.printLog('提示排队中');
+                        // 插入本地
+                        _messageProvider.insert(state.threadResult.msg!);
+                        // 加载本地历史消息
+                        _appendMessage(state.threadResult.msg!);
+                        // 发送商品信息
+                        // if (widget.custom != null &&
+                        //     widget.custom!.trim().length > 0) {
+                        //   _bdMqtt.sendCommodityMessage(
+                        //       widget.custom!, _currentThread!);
+                        // }
+                        // 发送附言消息
+                        if (widget.postscript != null &&
+                            widget.postscript!.trim().length > 0) {
+                          _bdMqtt.sendTextMessage(
+                              widget.postscript!, _currentThread!);
+                        }
+                      } else if (state.threadResult.statusCode == 203) {
+                        BytedeskUtils.printLog('当前非工作时间，请自助查询或留言');
+                        setState(() {
+                          _currentThread = state.threadResult.msg!.thread;
+                        });
+                        // 插入本地
+                        _messageProvider.insert(state.threadResult.msg!);
+                        // TODO: 加载本地历史消息
+                        _appendMessage(state.threadResult.msg!);
+                        // 跳转留言页面，TODO: 关闭当前页面？
+                        Navigator.of(context)
+                            .push(new MaterialPageRoute(builder: (context) {
+                          return new LeaveMsgProvider(
+                              wid: this.widget.wid,
+                              aid: this.widget.aid,
+                              type: this.widget.type,
+                              tip: state.threadResult.msg!.content);
+                        }));
+                      } else if (state.threadResult.statusCode == 204) {
+                        BytedeskUtils.printLog('当前无客服在线，请自助查询或留言');
+                        setState(() {
+                          _currentThread = state.threadResult.msg!.thread;
+                        });
+                        // 插入本地
+                        _messageProvider.insert(state.threadResult.msg!);
+                        // TODO: 加载本地历史消息
+                        // _getMessages(_page, _size);
+                        _appendMessage(state.threadResult.msg!);
+                        // 跳转留言页面, TODO: 关闭当前页面？
+                        Navigator.of(context)
+                            .push(new MaterialPageRoute(builder: (context) {
+                          return new LeaveMsgProvider(
+                              wid: this.widget.wid,
+                              aid: this.widget.aid,
+                              type: this.widget.type,
+                              tip: state.threadResult.msg!.content);
+                        }));
+                      } else if (state.threadResult.statusCode == 205) {
+                        BytedeskUtils.printLog('咨询前问卷');
+                        setState(() {
+                          _currentThread = state.threadResult.msg!.thread;
+                        });
+                        // 插入本地
+                        _messageProvider.insert(state.threadResult.msg!);
+                        // TODO: 加载本地历史消息
+                        // _getMessages(_page, _size);
+                        _appendMessage(state.threadResult.msg!);
+                        //
+                      } else if (state.threadResult.statusCode == 206) {
+                        // BytedeskUtils.printLog('返回机器人初始欢迎语 + 欢迎问题列表');
+                        // TODO: 显示问题列表
+                        setState(() {
+                          _isRobot = true;
+                          _robotUser = state.threadResult.msg!.user;
+                          _currentThread = state.threadResult.msg!.thread;
+                        });
+                        // 插入本地
+                        _messageProvider.insert(state.threadResult.msg!);
+                        // TODO: 加载本地历史消息
+                        // _getMessages(_page, _size);
+                        _appendMessage(state.threadResult.msg!);
+                        //
+                      } else if (state.threadResult.statusCode == -1) {
+                        Fluttertoast.showToast(msg: "请求会话失败");
+                      } else if (state.threadResult.statusCode == -2) {
+                        Fluttertoast.showToast(msg: "siteId或者工作组id错误");
+                      } else if (state.threadResult.statusCode == -3) {
+                        Fluttertoast.showToast(msg: "您已经被禁言");
+                      } else {
+                        Fluttertoast.showToast(msg: "请求会话失败");
+                      }
+                    } else if (state is RequestThreadError) {
+                      Fluttertoast.showToast(msg: "请求会话失败");
+                      setState(() {
+                        _isRequestingThread = false;
+                      });
+                    } else if (state is RequestAgentThreading) {
+                      setState(() {
+                        _isRequestingThread = true;
+                      });
+                    } else if (state is RequestAgentSuccess) {
+                      // 请求人工客服，不管此工作组是否设置为默认机器人，只要有人工客服在线，则可以直接对接人工
+                      setState(() {
+                        _isRobot = false; // 需要，勿删
+                        _currentThread = state.threadResult.msg!.thread;
+                        _isRequestingThread = false;
+                      });
+                      // 插入本地
+                      _messageProvider.insert(state.threadResult.msg!);
+                      // _appendMessage(state.threadResult.msg!);
+                    } else if (state is RequestAgentThreadError) {
+                      Fluttertoast.showToast(msg: "请求会话失败");
+                      setState(() {
+                        _isRequestingThread = false;
+                      });
+                    }
+                  },
+                ),
+                BlocListener<MessageBloc, MessageState>(
+                  listener: (context, state) {
+                    // BytedeskUtils.printLog('message state change');
+                    if (state is ReceiveMessageState) {
+                      // BytedeskUtils.printLog('receive message:' + state.message!.content!);
+                    } else if (state is MessageUpLoading) {
+                      Fluttertoast.showToast(msg: '上传中...');
+                    } else if (state is UploadImageSuccess) {
+                      if (_bdMqtt.isConnected()) {
+                        _bdMqtt.sendImageMessage(
+                            state.uploadJsonResult.url!, _currentThread!);
+                      } else {
+                        sendImageMessageRest(state.uploadJsonResult.url!);
+                      }
+                    } else if (state is UploadVideoSuccess) {
+                      _bdMqtt.sendVideoMessage(
+                          state.uploadJsonResult.url!, _currentThread!);
+                    } else if (state is QueryAnswerSuccess) {
+                      // 已经修改为直接插入本地
+                      // Message queryMessage = state.query!;
+                      // queryMessage.isSend = 1;
+                      // _messageProvider.insert(queryMessage);
+                      // _appendMessage(queryMessage);
+                      // //
+                      // _messageProvider.insert(state.answer!);
+                      // _appendMessage(state.answer!);
+                    } else if (state is QueryCategorySuccess) {
+                      _messageProvider.insert(state.answer!);
+                      _appendMessage(state.answer!);
+                    } else if (state is MessageAnswerSuccess) {
+                      // Message queryMessage = state.query!;
+                      // queryMessage.isSend = 1;
+                      // _messageProvider.insert(queryMessage);
+                      // _appendMessage(queryMessage);
+                      //
+                      if (state.query!.content!.contains('人工')) {
+                        BlocProvider.of<ThreadBloc>(context)
+                          ..add(RequestAgentEvent(
+                              wid: widget.wid,
+                              aid: widget.aid,
+                              type: widget.type));
+                      } else {
+                        _messageProvider.insert(state.answer!);
+                        _appendMessage(state.answer!);
+                      }
+                    } else if (state is RateAnswerSuccess) {
+                      // TODO:
+                    } else if (state is LoadHistoryMessageSuccess) {
+                      // BytedeskUtils.printLog('LoadHistoryMessageSuccess');
+                      // 插入历史聊天记录
+                      for (var i = 0; i < state.messageList!.length; i++) {
+                        Message message = state.messageList![i];
+                        _appendMessage(message);
+                      }
+                    } else if (state is LoadUnreadVisitorMessageSuccess) {
+                      // 插入历史聊天记录
+                      if (state.messageList!.length > 0) {
+                        // for (var i = 0; i < state.messageList!.length; i++) {
+                        for (var i = state.messageList!.length - 1; i >= 0; i--) {
+                          Message message = state.messageList![i];
+                          // 本地持久化
+                          _messageProvider.insert(message);
+                          // 界面显示
+                          _appendMessage(message);
+                          // 发送已读回执
+                          _bdMqtt.sendReceiptReadMessage(
+                              message.mid!, _currentThread!);
+                        }
+                      }
+                    } else if (state is SendMessageRestSuccess) {
+                      // http rest 发送消息成功
+                      String jsonMessage = state.jsonResult.data!;
+                      String mid = json.decode(jsonMessage);
+                      _messageProvider.update(
+                          mid, BytedeskConstants.MESSAGE_STATUS_STORED);
+                    } else if (state is SendMessageRestError) {
+                      // http rest 发送消息失败
+                      String jsonMessage = state.json;
+                      String mid = json.decode(jsonMessage);
+                      _messageProvider.update(
+                          mid, BytedeskConstants.MESSAGE_STATUS_STORED);
+                    }
+                  },
+                ),
+              ],
+              child: _isRequestingThread
+                  ? Container(
+                      margin: EdgeInsets.only(top: 50),
+                      alignment: Alignment.center,
+                      child: Column(children: <Widget>[
+                        CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                        Text('会话请求中, 请稍后...',style: TextStyle(color: Color(0xFF333333)),)
+                      ]))
+                  : Stack(
                     alignment: Alignment.center,
-                    child: Column(children: <Widget>[
-                      CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
-                      Text('会话请求中, 请稍后...',style: TextStyle(color: Color(0xFF333333)),)
-                    ]))
-                : Stack(
-                  alignment: Alignment.center,
-                  children: [
+                    children: [
 
 
-                    Container(
-                        alignment: Alignment.bottomCenter,
-                        color: Color(0xFFDEEEEEE),
-                        child: Column(
-                          children: <Widget>[
-                            // 参考pull_to_refresh库中 QQChatList例子
-                            Expanded(
-                              //
-                              child: SmartRefresher(
-                                enablePullDown: false,
-                                onLoading: () async {
-                                  // BytedeskUtils.printLog('TODO: 下拉刷新'); // 注意：方向跟默认是反着的
-                                  // await Future.delayed(Duration(milliseconds: 1000));
-                                  _getMessages(_page, _size);
-                                  setState(() {});
-                                  _refreshController.loadComplete();
-                                },
-                                footer: ClassicFooter(
-                                  loadStyle: LoadStyle.ShowWhenLoading,
-                                ),
-                                enablePullUp: true,
+                      Container(
+                          alignment: Alignment.bottomCenter,
+                          color: Color(0xFFDEEEEEE),
+                          child: Column(
+                            children: <Widget>[
+                              // 参考pull_to_refresh库中 QQChatList例子
+                              Expanded(
                                 //
-                                child: Scrollable(
-                                  controller: _scrollController,
-                                  axisDirection: AxisDirection.up,
-                                  viewportBuilder: (context, offset) {
-                                    return ExpandedViewport(
-                                      offset: offset,
-                                      axisDirection: AxisDirection.up,
-                                      slivers: <Widget>[
-                                        SliverExpanded(),
-                                        SliverList(
-                                          delegate: SliverChildBuilderDelegate(
-                                              (c, i) => _messages[i],
-                                              childCount: _messages.length),
-                                        )
-                                      ],
-                                    );
+                                child: SmartRefresher(
+                                  enablePullDown: false,
+                                  onLoading: () async {
+                                    // BytedeskUtils.printLog('TODO: 下拉刷新'); // 注意：方向跟默认是反着的
+                                    // await Future.delayed(Duration(milliseconds: 1000));
+                                    _getMessages(_page, _size);
+                                    setState(() {});
+                                    _refreshController.loadComplete();
                                   },
+                                  footer: ClassicFooter(
+                                    loadStyle: LoadStyle.ShowWhenLoading,
+                                  ),
+                                  enablePullUp: true,
+                                  //
+                                  child: Scrollable(
+                                    controller: _scrollController,
+                                    axisDirection: AxisDirection.up,
+                                    viewportBuilder: (context, offset) {
+                                      return ExpandedViewport(
+                                        offset: offset,
+                                        axisDirection: AxisDirection.up,
+                                        slivers: <Widget>[
+                                          SliverExpanded(),
+                                          SliverList(
+                                            delegate: SliverChildBuilderDelegate(
+                                                (c, i) => _messages[i],
+                                                childCount: _messages.length),
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                  //
+                                  controller: _refreshController,
                                 ),
-                                //
-                                controller: _refreshController,
                               ),
-                            ),
-                            Divider(
-                              height: 1.0,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white
+                              Divider(
+                                height: 1.0,
                               ),
-                              // child: _textComposerWidget(),
-                              child: _chatInput(),
-                            ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white
+                                ),
+                                // child: _textComposerWidget(),
+                                child: _chatInput(),
+                              ),
 
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    showGood? Positioned(
-                      top: 0,
-                      child:Container(
-                        width: MediaQuery.of(context).size.width,
+                      showGood? Positioned(
+                        top: 0,
+                        child:Container(
+                          width: MediaQuery.of(context).size.width,
 
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFe5f9ff),
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(width: 10,),
-                            Image.network(goodUrl,width: 50,height: 50,),
-                            SizedBox(width: 10,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(goodName,style: TextStyle(color: Color(0xFF333333),fontSize: 15),),
-                                SizedBox(height: 8,),
-                                Row(
-                                  children: [
-                                    Text('¥ '+goodPrice,style: TextStyle(color:  Colors.red,fontSize: 16),),
-                                    SizedBox(width: 30,),
-                                    GestureDetector(
-                                      onTap: (){
-                                        showGood = false;
-                                        setState(() {
-                                        });
-                                        _goodsSubmitted();
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFefefef),
-                                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                                          border: Border.all(color:Color(0xFF999999) )
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFe5f9ff),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(width: 10,),
+                              Image.network(goodUrl,width: 50,height: 50,),
+                              SizedBox(width: 10,),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(goodName,style: TextStyle(color: Color(0xFF333333),fontSize: 15),),
+                                  SizedBox(height: 8,),
+                                  Row(
+                                    children: [
+                                      Text('¥ '+goodPrice,style: TextStyle(color:  Colors.red,fontSize: 16),),
+                                      SizedBox(width: 30,),
+                                      GestureDetector(
+                                        onTap: (){
+                                          //showGood = false;
+                                          setState(() {
+                                          });
+                                          _goodsSubmitted();
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFefefef),
+                                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                                            border: Border.all(color:Color(0xFF999999) )
+                                          ),
+                                          padding: EdgeInsets.symmetric(horizontal: 5),
+                                          child: Text('发送链接',style: TextStyle(color: Color(0xFF333333)),),
                                         ),
-                                        padding: EdgeInsets.symmetric(horizontal: 5),
-                                        child: Text('发送链接',style: TextStyle(color: Color(0xFF333333)),),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            IconButton(
-                              padding: const EdgeInsets.only(bottom: 30),
-                              icon: Icon(
-                                Icons.close,
+                                    ],
+                                  ),
+                                ],
                               ),
-                              onPressed: () {
-                                showGood = false;
-                                setState(() {
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ),):SizedBox(),
-                  ],
-                )));
+                              Spacer(),
+                              IconButton(
+                                padding: const EdgeInsets.only(bottom: 30),
+                                icon: Icon(
+                                  Icons.close,
+                                ),
+                                onPressed: () {
+                                  showGood = false;
+                                  setState(() {
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),):SizedBox(),
+                    ],
+                  ))),
+    );
   }
 
   Widget _chatInput() {
@@ -690,6 +697,8 @@ class _ChatKFPageState extends State<ChatKFPage>
     print('_handleShowOrders');
     if(widget.customCallback!=null){
       widget.customCallback!('点击订单');
+      customGoods = BytedeskUtils.goodsInfo;
+      _goodsSubmitted();
     }
   }
 
@@ -784,9 +793,9 @@ class _ChatKFPageState extends State<ChatKFPage>
 
   // 发送商品消息
   void _goodsSubmitted() {
-
-    if (widget.custom != null &&
-        widget.custom!.trim().length > 0) {
+    print(customGoods);
+    if (
+    customGoods.trim().length > 0) {
 
       if (_bdMqtt.isConnected()) {
         if (_currentThread == null) {
@@ -795,7 +804,7 @@ class _ChatKFPageState extends State<ChatKFPage>
         }
         // 长连接正常情况下，调用长连接接口
         _bdMqtt.sendCommodityMessage(
-            widget.custom!, _currentThread!);
+            customGoods, _currentThread!);
       } else {
 
       }

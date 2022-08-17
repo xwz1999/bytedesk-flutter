@@ -29,6 +29,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class BytedeskUtils {
   //
+  static String goodsInfo = '';
   static bool get isDesktop => !isWeb && (isWindows || isLinux || isMacOS);
   static bool get isMobile => isAndroid || isIOS;
   static bool get isWeb => kIsWeb;
