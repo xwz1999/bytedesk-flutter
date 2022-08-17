@@ -207,9 +207,9 @@ class BytedeskKefu {
   }
 
   static void startWorkGroupChatShopCallback(BuildContext context, String wid,
-      String title, String commodity, ValueSetter<String> customCallback) {
+      String title, String commodity, ValueSetter<String> customCallback,{Widget? widget}) {
     startChatShop(context, wid, BytedeskConstants.CHAT_TYPE_WORKGROUP, title,
-        commodity, customCallback);
+        commodity, customCallback,widget: widget);
   }
 
   // 指定客服会话
@@ -247,8 +247,9 @@ class BytedeskKefu {
 
   // 电商对话-自定义类型(技能组、指定客服)
   static void startChatShop(BuildContext context, String uuid, String type,
-      String title, String commodity, ValueSetter<String>? customCallback) {
-    startChat(context, uuid, type, title, commodity, '', false, customCallback);
+      String title, String commodity, ValueSetter<String>? customCallback,
+      {Widget? widget}) {
+    startChat(context, uuid, type, title, commodity, '', false, customCallback,widget:widget);
   }
 
   // 发送附言消息-自定义类型(技能组、指定客服)
@@ -266,7 +267,9 @@ class BytedeskKefu {
       String commodity,
       String postScript,
       bool isV2Robot,
-      ValueSetter<String>? customCallback) {
+      ValueSetter<String>? customCallback,
+      {Widget? widget}
+      ) {
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
       return new ChatKFProvider(
         wid: uuid,

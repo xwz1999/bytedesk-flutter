@@ -73,7 +73,7 @@ class ExtraItems extends StatefulWidget {
     this.handleFileSelection,
     this.handlePickerSelection,
     this.handleUploadVideo,
-    this.handleCaptureVideo,
+    this.handleCaptureVideo, this.handleShowOrders,
   }) : super(key: key);
 
   final void Function()? handleImageSelection;
@@ -81,6 +81,8 @@ class ExtraItems extends StatefulWidget {
   final void Function()? handlePickerSelection;
   final void Function()? handleUploadVideo;
   final void Function()? handleCaptureVideo;
+  final void Function()? handleShowOrders;///新增外部显示订单弹窗
+
 
   @override
   _ExtraItemsState createState() => _ExtraItemsState();
@@ -127,11 +129,11 @@ class _ExtraItemsState extends State<ExtraItems> {
           Row(
             children: [
               // TODO: 选择文件
-              // ExtraItem(
-              //   title: "文件",
-              //   image: AssetImage('assets/images/chat/extra_file.webp'),
-              //   onPressed: widget.handleFileSelection,
-              // ),
+              ExtraItem(
+                title: "发送订单",
+                image: AssetImage('assets/images/chat/extra_wallet.png'),
+                onPressed: widget.handleShowOrders,
+              ),
               // ExtraItem(
               //   title: "语音输入",
               //   image: AssetImage('assets/images/chat/extra_voice.webp'),

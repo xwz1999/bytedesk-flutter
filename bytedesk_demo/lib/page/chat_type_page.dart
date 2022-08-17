@@ -130,6 +130,15 @@ class _ChatTypePageState extends State<ChatTypePage> {
                   context, _workGroupWid, "技能组客服-电商-回调", custom, (value) {
                 print('value为custom参数原样返回 $value');
                 // 主要用途：用户在聊天页面点击商品消息，回调此接口，开发者可在此打开进入商品详情页
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        width: 200,
+                        height: 200,
+                        color: Colors.red,
+                      );
+                    });
               });
             },
           ),

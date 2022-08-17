@@ -51,6 +51,7 @@ class ChatKFPage extends StatefulWidget {
   final bool? isThread;
   final Thread? thread;
   final ValueSetter<String>? customCallback;
+  final Widget? widget;
   //
   ChatKFPage(
       {Key? key,
@@ -63,7 +64,7 @@ class ChatKFPage extends StatefulWidget {
       this.isV2Robot,
       this.isThread,
       this.thread,
-      this.customCallback})
+      this.customCallback, this.widget})
       : super(key: key);
   //
   @override
@@ -254,7 +255,7 @@ class _ChatKFPageState extends State<ChatKFPage>
                           // style: TextStyle(color: Colors.black),
                         ),
                       ))),
-            )
+            ),
           ],
         ),
         body: MultiBlocListener(
@@ -658,7 +659,10 @@ class _ChatKFPageState extends State<ChatKFPage>
           // 上传视频
           handleUploadVideo: _handleUploadVideo,
           // 录制视频
-          handleCaptureVideo: _handleCaptureVideo),
+          handleCaptureVideo: _handleCaptureVideo,
+
+          handleShowOrders: _handleShowOrders,
+      ),
     );
   }
 
@@ -680,6 +684,13 @@ class _ChatKFPageState extends State<ChatKFPage>
   void _handleImageSelection() async {
     print('_handleImageSelection');
     _pickImage();
+  }
+
+  void _handleShowOrders() async {
+    print('_handleShowOrders');
+    if(widget.customCallback!=null){
+      widget.customCallback!('点击订单');
+    }
   }
 
   void _handleFileSelection() async {
