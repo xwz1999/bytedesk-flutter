@@ -127,11 +127,8 @@ class _ChatKFPageState extends State<ChatKFPage>
     print('发生改变！！！！！！！！！！');
     print('customGoods'+customGoods);
     print('BytedeskUtils.goodsInfo.value'+BytedeskUtils.goodsInfo.value);
-    if(customGoods==BytedeskUtils.goodsInfo.value)
-      return;
     customGoods = BytedeskUtils.goodsInfo.value;
     print('BytedeskUtils.goodsInfo.value'+BytedeskUtils.goodsInfo.value);
-
 
     _goodsSubmitted();
   }
@@ -139,12 +136,9 @@ class _ChatKFPageState extends State<ChatKFPage>
   @override
   void initState() {
 
-    BytedeskUtils.goodsInfo.addListener(() {
-
-      submit;
-
-
-    });
+    BytedeskUtils.goodsInfo.addListener(
+      submit
+    );
 
 
     if(widget.btnBack==null){
@@ -1555,7 +1549,7 @@ class _ChatKFPageState extends State<ChatKFPage>
     _debounce?.cancel();
     _loadHistoryTimer?.cancel();
     _resendTimer?.cancel();
-    BytedeskUtils.goodsInfo.removeListener(() {  submit;});
+    BytedeskUtils.goodsInfo.removeListener( submit);
     // bytedeskEventBus.destroy(); // FIXME: 只能取消监听，不能destroy
     super.dispose();
   }
