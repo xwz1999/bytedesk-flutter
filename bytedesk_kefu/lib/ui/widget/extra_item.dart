@@ -129,7 +129,7 @@ class _ExtraItemsState extends State<ExtraItems> {
           Row(
             children: [
               // TODO: 选择文件
-              ExtraItem(
+              widget.handleShowOrders==null?SizedBox(): ExtraItem(
                 title: "发送订单",
                 image: AssetImage('assets/images/chat/extra_wallet.png'),
                 onPressed: widget.handleShowOrders,

@@ -123,16 +123,27 @@ class _ChatKFPageState extends State<ChatKFPage>
   // String lastGoods = '';
 
 
+  submit(){
+    print('发生改变！！！！！！！！！！');
+    print('customGoods'+customGoods);
+    print('BytedeskUtils.goodsInfo.value'+BytedeskUtils.goodsInfo.value);
+    if(customGoods==BytedeskUtils.goodsInfo.value)
+      return;
+    customGoods = BytedeskUtils.goodsInfo.value;
+    print('BytedeskUtils.goodsInfo.value'+BytedeskUtils.goodsInfo.value);
+
+
+    _goodsSubmitted();
+  }
+
   @override
   void initState() {
 
     BytedeskUtils.goodsInfo.addListener(() {
-      print('发生改变！！！！！！！！！！');
-      print('customGoods'+customGoods);
-      print('BytedeskUtils.goodsInfo.value'+BytedeskUtils.goodsInfo.value);
-      customGoods = BytedeskUtils.goodsInfo.value;
-      print('BytedeskUtils.goodsInfo.value'+BytedeskUtils.goodsInfo.value);
-      _goodsSubmitted();
+
+      submit;
+
+
     });
 
 
@@ -687,7 +698,7 @@ class _ChatKFPageState extends State<ChatKFPage>
           // 录制视频
           handleCaptureVideo: _handleCaptureVideo,
 
-          handleShowOrders: _handleShowOrders,
+          handleShowOrders: widget.btnBack==null?null: _handleShowOrders,
       ),
     );
   }
@@ -1544,6 +1555,7 @@ class _ChatKFPageState extends State<ChatKFPage>
     _debounce?.cancel();
     _loadHistoryTimer?.cancel();
     _resendTimer?.cancel();
+    BytedeskUtils.goodsInfo.removeListener(() {  submit;});
     // bytedeskEventBus.destroy(); // FIXME: 只能取消监听，不能destroy
     super.dispose();
   }
