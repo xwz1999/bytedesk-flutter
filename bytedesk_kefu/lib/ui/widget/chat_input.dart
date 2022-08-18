@@ -335,6 +335,22 @@ class _ChatInputState extends State<ChatInput> with TickerProviderStateMixin {
       //           ),
       //       hintText: '',
       //     ),
+      decoration: InputDecoration(
+
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            width: 1,
+
+          ),
+        ),
+        enabledBorder:  UnderlineInputBorder(
+          borderSide: BorderSide(
+            width: 1,
+            color: Color(0xFF333333),
+          ),
+        ),
+
+      ),
       style:TextStyle(color: Color(0xFF333333)),
       focusNode: _inputFocusNode,
       // maxLength: 400,

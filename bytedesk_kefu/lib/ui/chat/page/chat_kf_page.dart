@@ -128,7 +128,10 @@ class _ChatKFPageState extends State<ChatKFPage>
 
     BytedeskUtils.goodsInfo.addListener(() {
       print('发生改变！！！！！！！！！！');
+      print('customGoods'+customGoods);
+      print('BytedeskUtils.goodsInfo.value'+BytedeskUtils.goodsInfo.value);
       customGoods = BytedeskUtils.goodsInfo.value;
+      print('BytedeskUtils.goodsInfo.value'+BytedeskUtils.goodsInfo.value);
       _goodsSubmitted();
     });
 

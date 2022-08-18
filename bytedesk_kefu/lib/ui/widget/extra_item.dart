@@ -58,7 +58,7 @@ class ExtraItem extends StatelessWidget {
                 ),
               ),
             ),
-            Text(this.title),
+            Text(this.title,style: TextStyle(color: Color(0xFF333333)),),
           ],
         ),
       ),
