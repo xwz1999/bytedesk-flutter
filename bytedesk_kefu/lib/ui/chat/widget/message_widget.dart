@@ -241,6 +241,7 @@ class MessageWidget extends StatelessWidget {
                     child: Text(
                       title,
                       maxLines: 2,
+                      style: TextStyle(color: Color(0xFF333333)),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -253,15 +254,15 @@ class MessageWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 10, left: 8),
-                  //   child: Text(
-                  //     '$content',
-                  //     style: TextStyle(fontSize: 12, color: Colors.grey),
-                  //     maxLines: 1,
-                  //     overflow: TextOverflow.ellipsis,
-                  //   ),
-                  // )
+                  Container(
+                    margin: EdgeInsets.only(top: 10, left: 8),
+                    child: Text(
+                      '$content',
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
                   // Gaps.vGap4,
                 ],
               ),
