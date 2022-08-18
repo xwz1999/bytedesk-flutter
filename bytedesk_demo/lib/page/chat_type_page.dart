@@ -171,8 +171,8 @@ class _ChatTypePageState extends State<ChatTypePage> {
                             onTap: (){
                               custom = json.encode({
                                 "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
-                                "title": "222", // 可自定义, 类型为字符串
-                                "content": "222", // 可自定义, 类型为字符串
+                                "title": "222222222222212312312321321", // 可自定义, 类型为字符串
+                                "content": "1232132131232131231232132121213213213123", // 可自定义, 类型为字符串
                                 "price": "222", // 可自定义, 类型为字符串
                                 "url":
                                 "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串

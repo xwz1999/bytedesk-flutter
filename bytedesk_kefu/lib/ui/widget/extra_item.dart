@@ -29,7 +29,7 @@ class ExtraItem extends StatelessWidget {
         print('功能暂未实现')
       },
       child: Padding(
-        padding: EdgeInsets.only(left: 15, top: 13, right: 15, bottom: 0),
+        padding: EdgeInsets.only(left: 10, top: 13, right: 10,  bottom: 0),
         child: Column(
           children: [
             Container(

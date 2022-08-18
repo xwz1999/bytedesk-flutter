@@ -39,7 +39,7 @@ class MessageWidget extends StatelessWidget {
 
   // 发送消息widget
   Widget _buildSendWidget(BuildContext context) {
-    double tWidth = MediaQuery.of(context).size.width - 160;
+    double tWidth = MediaQuery.of(context).size.width - 130;
     // FIXME: 消息状态，待完善
     String status = '';
     if (message!.status == BytedeskConstants.MESSAGE_STATUS_SENDING) {
@@ -224,8 +224,8 @@ class MessageWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              width: 90.0,
-              height: 90.0,
+              width: 80.0,
+              height: 80.0,
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
               ),
@@ -258,7 +258,7 @@ class MessageWidget extends StatelessWidget {
                     margin: EdgeInsets.only(top: 10, left: 8),
                     child: Text(
                       '$content',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                      style: TextStyle(fontSize: 12, color: Color(0xFF333333)),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -695,7 +695,7 @@ class MessageWidget extends StatelessWidget {
                     margin: EdgeInsets.only(top: 10, left: 8),
                     child: Text(
                       '$content',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                      style: TextStyle(fontSize: 12, color: Color(0xFF333333)),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
