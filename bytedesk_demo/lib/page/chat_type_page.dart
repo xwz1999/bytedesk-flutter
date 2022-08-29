@@ -88,7 +88,7 @@ class _ChatTypePageState extends State<ChatTypePage> {
               // 注意：长度不能大于500字符
               var custom = json.encode({
                 "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
-                "title": "商品标题", // 可自定义, 类型为字符串
+                "title": "商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题", // 可自定义, 类型为字符串
                 "content": "商品详情", // 可自定义, 类型为字符串
                 "price": "9.99", // 可自定义, 类型为字符串
                 "url":
@@ -112,7 +112,7 @@ class _ChatTypePageState extends State<ChatTypePage> {
               // 注意：长度不能大于500字符
               var custom = json.encode({
                 "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
-                "title": "商品标题", // 可自定义, 类型为字符串
+                "title": "商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题", // 可自定义, 类型为字符串
                 "content": "商品详情", // 可自定义, 类型为字符串
                 "price": "9.99", // 可自定义, 类型为字符串
                 "url":

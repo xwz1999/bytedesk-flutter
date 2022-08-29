@@ -620,7 +620,7 @@ class _ChatKFPageState extends State<ChatKFPage>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(goodName,style: TextStyle(color: Color(0xFF333333),fontSize: 15),),
+                                  SizedBox(child: Text(goodName,style: TextStyle(color: Color(0xFF333333),fontSize: 15),maxLines: 2,overflow: TextOverflow.ellipsis,),width: 240,),
                                   SizedBox(height: 8,),
                                   Row(
                                     children: [
