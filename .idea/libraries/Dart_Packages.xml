@@ -150,6 +150,48 @@
             </list>
           </value>
         </entry>
+        <entry key="device_info_plus">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus-2.2.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="device_info_plus_linux">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_linux-2.1.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="device_info_plus_macos">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_macos-2.2.3/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="device_info_plus_platform_interface">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_platform_interface-2.6.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="device_info_plus_web">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_web-2.1.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="device_info_plus_windows">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_windows-2.1.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="devicelocale">
           <value>
             <list>
@@ -1066,6 +1108,12 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/cupertino_icons-1.0.5/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info-2.0.3/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_platform_interface-2.0.1/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus-2.2.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_linux-2.1.1/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_macos-2.2.3/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_platform_interface-2.6.1/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_web-2.1.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/device_info_plus_windows-2.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/devicelocale-0.5.4/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/diffutil_dart-3.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/equatable-2.0.3/lib" />

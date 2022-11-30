@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:bytedesk_kefu/http/bytedesk_base_api.dart';
 import 'package:bytedesk_kefu/util/bytedesk_constants.dart';
 import 'package:bytedesk_kefu/util/bytedesk_utils.dart';
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:package_info/package_info.dart';
 

@@ -51,7 +51,8 @@ dependencies:
   # H5-webchat https://pub.dev/packages/webview_flutter
   webview_flutter: ^2.0.4
   # https://pub.dev/packages/device_info
-  device_info: 2.0.0
+#  device_info: 2.0.0
+  device_info_plus: ^2.0.1
   # 查看大图 https://pub.dev/packages/photo_view
   photo_view: ^0.13.0
   # 图片缓存 https://pub.dev/packages/cached_network_image
