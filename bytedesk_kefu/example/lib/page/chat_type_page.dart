@@ -91,9 +91,9 @@ class _ChatTypePageState extends State<ChatTypePage> {
                 "content": "商品详情", // 可自定义, 类型为字符串
                 "price": "9.99", // 可自定义, 类型为字符串
                 "url":
-                    "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串
+                "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串
                 "imageUrl":
-                    "https://bytedesk.oss-cn-shenzhen.aliyuncs.com/images/123.webp", //必须为图片网址, 类型为字符串
+                "https://bytedesk.oss-cn-shenzhen.aliyuncs.com/images/123.webp", //必须为图片网址, 类型为字符串
                 "id": 123, // 可自定义
                 "categoryCode": "100010003", // 可自定义, 类型为字符串
                 "client": "flutter" // 可自定义, 类型为字符串
@@ -115,9 +115,9 @@ class _ChatTypePageState extends State<ChatTypePage> {
                 "content": "商品详情", // 可自定义, 类型为字符串
                 "price": "9.99", // 可自定义, 类型为字符串
                 "url":
-                    "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串
+                "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串
                 "imageUrl":
-                    "https://bytedesk.oss-cn-shenzhen.aliyuncs.com/images/123.webp", //必须为图片网址, 类型为字符串
+                "https://bytedesk.oss-cn-shenzhen.aliyuncs.com/images/123.webp", //必须为图片网址, 类型为字符串
                 "id": 123, // 可自定义
                 "categoryCode": "100010003", // 可自定义, 类型为字符串
                 "client": "flutter", // 可自定义, 类型为字符串
@@ -167,7 +167,7 @@ class _ChatTypePageState extends State<ChatTypePage> {
                 "price": "9.99",
                 "url": "https://item.m.jd.com/product/12172344.html",
                 "imageUrl":
-                    "https://bytedesk.oss-cn-shenzhen.aliyuncs.com/images/123.webp",
+                "https://bytedesk.oss-cn-shenzhen.aliyuncs.com/images/123.webp",
                 "id": 123,
                 "categoryCode": "100010003",
                 "client": "flutter"
@@ -190,7 +190,7 @@ class _ChatTypePageState extends State<ChatTypePage> {
                 "price": "9.99",
                 "url": "https://item.m.jd.com/product/12172344.html",
                 "imageUrl":
-                    "https://bytedesk.oss-cn-shenzhen.aliyuncs.com/images/123.webp",
+                "https://bytedesk.oss-cn-shenzhen.aliyuncs.com/images/123.webp",
                 "id": 123,
                 "categoryCode": "100010003",
                 "client": "flutter",
@@ -224,8 +224,9 @@ class _ChatTypePageState extends State<ChatTypePage> {
             onTap: () {
               print('h5 chat');
               // 注意: 登录后台->客服管理->技能组(或客服账号)->获取客服代码 获取相应URL
-              String url =
-                  "https://h2.kefux.cn/chat/h5/index.html?sub=vip&uid=201808221551193&wid=201807171659201&type=workGroup&aid=&hidenav=1&ph=ph";
+              String url = "https://h2.kefux.com/chat/h5/index.html?sub=vip&uid=201808221551193&wid=201807171659201&type=workGroup&aid=&hidenav=1&p";
+              // String url =
+              //     "http://127.0.0.1:8887/chat/h5/index.html?sub=vip&uid=201808221551193&wid=201807171659201&type=workGroup&aid=201808221551193&history=0&lang=cn&v2robot=0&p";
               String title = 'H5在线客服演示';
               BytedeskKefu.startH5Chat(context, url, title);
             },
@@ -236,12 +237,12 @@ class _ChatTypePageState extends State<ChatTypePage> {
   }
 
   void _getUnreadCountVisitor() {
-    // 获取指定客服在线状态
+    // 获取消息未读数目
     BytedeskKefu.getUnreadCountVisitor().then((count) => {
-          print('unreadcount:' + count),
-          setState(() {
-            _unreadMessageCount = count;
-          })
-        });
+      print('unreadcount:' + count),
+      setState(() {
+        _unreadMessageCount = count;
+      })
+    });
   }
 }
