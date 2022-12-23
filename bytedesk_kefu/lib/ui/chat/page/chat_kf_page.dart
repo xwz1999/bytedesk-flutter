@@ -594,7 +594,7 @@ class _ChatKFPageState extends State<ChatKFPage>
                                   color: Colors.white
                                 ),
                                 // child: _textComposerWidget(),
-                                child: _chatInput(),
+                                child: (BytedeskUtils.isWeb || BytedeskUtils.isAndroid) ? _textComposerWidget() : _chatInput(),
                               ),
 
                             ],
