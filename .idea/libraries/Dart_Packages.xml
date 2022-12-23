@@ -269,7 +269,6 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.flutter-io.cn/file_picker-4.6.1/lib" />
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dartlang.org/file_picker-4.6.1/lib" />
             </list>
           </value>
         </entry>
@@ -1251,7 +1250,6 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dartlang.org/ffi-1.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dartlang.org/file-6.1.4/lib" />
-      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dartlang.org/file_picker-4.6.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dartlang.org/fixnum-1.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dartlang.org/flutter_bloc-8.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dartlang.org/flutter_blurhash-0.7.0/lib" />
