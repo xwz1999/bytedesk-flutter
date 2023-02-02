@@ -5,7 +5,7 @@ import 'package:bytedesk_kefu/http/bytedesk_base_api.dart';
 import 'package:bytedesk_kefu/util/bytedesk_constants.dart';
 import 'package:bytedesk_kefu/util/bytedesk_utils.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:devicelocale/devicelocale.dart';
+// import 'package:devicelocale/devicelocale.dart';
 import 'package:package_info/package_info.dart';
 
 class BytedeskDeviceHttpApi extends BytedeskBaseHttpApi {
@@ -44,7 +44,8 @@ class BytedeskDeviceHttpApi extends BytedeskBaseHttpApi {
     Map<String, dynamic> deviceData =
         _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
     //
-    String? locale = await Devicelocale.currentLocale;
+    // String? locale = await Devicelocale.currentLocale;
+    String? locale = '';
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     var body = json.encode({
       "sdkVersion": deviceData['version.sdkInt'],
@@ -69,7 +70,8 @@ class BytedeskDeviceHttpApi extends BytedeskBaseHttpApi {
     Map<String, dynamic> deviceData =
         _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
     //
-    String? locale = await Devicelocale.currentLocale;
+    // String? locale = await Devicelocale.currentLocale;
+    String? locale = '';
     // Locale locale2 = await Devicelocale.currentAsLocale;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     var body = json.encode({
